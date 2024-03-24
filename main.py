@@ -7,10 +7,10 @@ from sklearn.preprocessing import OneHotEncoder
 from sklearn.compose import ColumnTransformer
 
 # Import your model classes
-from knn_model import KNNModel
-from logistic_regression_model import LogisticRegressionModel
-from random_forest_model import RandomForestModel
-from svm_model import SVMModel
+from models.knn_model import KNNModel
+from models.logistic_regression_model import LogisticRegressionModel
+from models.random_forest_model import RandomForestModel
+from models.svm_model import SVMModel
 
 # Assuming 'data.csv' is your dataset and 'target' is your target column
 data = pd.read_csv('data.csv', delimiter=';')
