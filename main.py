@@ -3,7 +3,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
 from sklearn.impute import SimpleImputer
 from sklearn.pipeline import Pipeline
-from sklearn.preprocessing import OneHotEncoder
+from sklearn.preprocessing import OneHotEncoder, StandardScaler
 from sklearn.compose import ColumnTransformer
 
 # Import your model classes
@@ -39,22 +39,27 @@ X = data.drop('Target', axis=1)
 y = data['Target']
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
 
- # KNN Model
-knn_model = KNNModel()
-best_knn_config = knn_model.run(X_train, X_test, y_train, y_test)
+# Scale the data
+scaler = StandardScaler()
+X_train = scaler.fit_transform(X_train)
+X_test = scaler.transform(X_test)
+
+# KNN Model
+knn_model = KNNModel(X_train, X_test, y_train, y_test)
+best_knn_config = knn_model.run()
 print("Best KNN Configuration:", best_knn_config)
 
 # Logistic Regression Model
-lr_model = LogisticRegressionModel()
-best_lr_config = lr_model.run(X_train, X_test, y_train, y_test)
+lr_model = LogisticRegressionModel(X_train, X_test, y_train, y_test)
+best_lr_config = lr_model.run()
 print("Best Logistic Regression Configuration:", best_lr_config)
 
 # SVM Model
-svm_model = SVMModel()
-best_svm_config = svm_model.run(X_train, X_test, y_train, y_test)
+svm_model = SVMModel(X_train, X_test, y_train, y_test)
+best_svm_config = svm_model.run()
 print("Best SVM Configuration:", best_svm_config)
 
 # Random Forest Model
-rf_model = RandomForestModel()
-best_rf_config = rf_model.run(X_train, X_test, y_train, y_test)
+rf_model = RandomForestModel(X_train, X_test, y_train, y_test)
+best_rf_config = rf_model.run()
 print("Best Random Forest Configuration:", best_rf_config)
