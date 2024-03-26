@@ -1,14 +1,19 @@
 import os
 import pandas as pd
 import numpy as np
+import logging
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
+from sklearn.ensemble import VotingClassifier
 
-# Assuming each model class (KNNModel, etc.) is in the models package
+# Import your model classes
 from models.knn_model import KNNModel
-from models.logistic_regression_model import LogisticRegressionModel
-from models.random_forest_model import RandomForestModel
-from models.svm_model import SVMModel
+# from models.logistic_regression_model import LogisticRegressionModel
+# from models.random_forest_model import RandomForestModel
+# from models.svm_model import SVMModel
+
+# Configure logging
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 def preprocess_data(X):
     scaler = StandardScaler()
@@ -24,36 +29,34 @@ def load_and_preprocess_data(filepath):
 
 def run_model(X, y, model_class, **kwargs):
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
-
-    X_train = np.ascontiguousarray(X_train)
-    X_test = np.ascontiguousarray(X_test)
-
     model = model_class(X_train, X_test, y_train, y_test)
     best_config = model.run(**kwargs)
-
-    # Evaluate the best model
     evaluation_results = model.evaluate()
-    print("Best KNN Configuration: K =", best_config["K"])
-    print("Evaluation Results for the Best Model:")
+
+    # Logging the results
+    logging.info(f"Best Configuration: {best_config}")
+    logging.info("Evaluation Results for the Best Model:")
     for metric, value in evaluation_results.items():
-        print(f"{metric}\n{value}\n")
+        logging.info(f"{metric}: {value}")
 
     return best_config, model.model
+
+def create_ensemble_model(models):
+    ensemble = VotingClassifier(estimators=models, voting='soft')
+    return ensemble
 
 datasets_path = 'datasets/'
 for filename in os.listdir(datasets_path):
     if filename.endswith('.csv'):
         filepath = os.path.join(datasets_path, filename)
-        print(f"Processing {filename}...")
-        print()
+        logging.info(f"Processing {filename}")
 
         X, y = load_and_preprocess_data(filepath)
-
         models = []
 
         # Run KNN Model
-        print("Running KNN Model...")
-        best_knn_config, knn_model = run_model(X, y, KNNModel, k_range=range(1, 31))
+        logging.info("Running KNN Model...")
+        knn_config, knn_model = run_model(X, y, KNNModel)
         models.append(('knn', knn_model))
 
         # Uncomment to run other models with their respective configurations
@@ -74,4 +77,10 @@ for filename in os.listdir(datasets_path):
 
         # TODO add ensemble model based on  models [] 
 
-        print("=====================================")
+        # Create and evaluate an ensemble model
+        if len(models) > 1:
+            ensemble_model = create_ensemble_model(models)
+            # You can fit the ensemble model on the entire dataset or a separate training set
+            # and evaluate it as needed
+
+        logging.info("=====================================")
