@@ -33,11 +33,12 @@ def run_model(X, y, model_class, **kwargs):
     best_config = model.run(**kwargs)
     evaluation_results = model.evaluate()
 
-    # Logging the results
-    logging.info(f"Best Configuration: {best_config}")
-    logging.info("Evaluation Results for the Best Model:")
+    # Combine best configuration details with evaluation results for output
+    print("Evaluation Results for the Best Model:")
+    if best_config:
+        print(f"Best Configuration: {best_config}")
     for metric, value in evaluation_results.items():
-        logging.info(f"{metric}: {value}")
+        print(f"{metric} {value}")
 
     return best_config, model.model
 
@@ -83,4 +84,4 @@ for filename in os.listdir(datasets_path):
             # You can fit the ensemble model on the entire dataset or a separate training set
             # and evaluate it as needed
 
-        logging.info("=====================================")
+        logging.info("="*50)
