@@ -1,9 +1,10 @@
 import os
 import logging
 import sys
+import joblib  # Add this import
 sys.path.append(os.path.abspath(os.path.dirname(__file__)))
 
-from models import KNNModel # Add others here
+from models import KNNModel, RandomForestModel # Add others here
 
 from utils import load_and_preprocess_data, create_ensemble_model
 from sklearn.model_selection import train_test_split
@@ -23,7 +24,7 @@ def main():
 
             models_info = [
                 ('KNN', KNNModel, {'X_train': X_train, 'X_test': X_test, 'y_train': y_train, 'y_test': y_test}),
-                # Add other models as needed
+                ('RandomForest', RandomForestModel, {'X_train': X_train, 'X_test': X_test, 'y_train': y_train, 'y_test': y_test})
             ]
             
             models = run_models(models_info)
@@ -52,6 +53,7 @@ def run_models(models_info):
             logging.info(f"{metric}: {value}")
 
         models.append((model_name, model))
+        joblib.dump(model, f"{model_name}_model.pkl")
 
     return models
 
