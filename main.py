@@ -3,7 +3,7 @@ import logging
 import sys
 sys.path.append(os.path.abspath(os.path.dirname(__file__)))
 
-from models import KNNModel # Add others here
+from models import KNNModel, LogisticRegressionModel # Add others here
 
 from utils import load_and_preprocess_data, create_ensemble_model
 from sklearn.model_selection import train_test_split
@@ -23,6 +23,7 @@ def main():
 
             models_info = [
                 ('KNN', KNNModel, {'X_train': X_train, 'X_test': X_test, 'y_train': y_train, 'y_test': y_test}),
+                ('Logistic Regression', LogisticRegressionModel, {'X_train': X_train, 'X_test': X_test, 'y_train': y_train, 'y_test': y_test}),
                 # Add other models as needed
             ]
             
