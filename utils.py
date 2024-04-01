@@ -14,6 +14,6 @@ def load_and_preprocess_data(filepath):
     return preprocess_data(X), y
 
 def create_ensemble_model(models):
-    estimators = [(name, model.model) for name, model in models]
-    ensemble = VotingClassifier(estimators=estimators, voting='soft')
+    estimators = [(name, model) for name, model in models]
+    ensemble = VotingClassifier(estimators=estimators, voting='hard')
     return ensemble
