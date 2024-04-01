@@ -1,0 +1,15 @@
+Accuracy,Precision,Recall,F1 Score,Model,Dataset,Classification Report
+0.762,0.739,0.762,0.744,KNN,top_features,
+0.7762711864406779,0.7665314470231788,0.7762711864406779,0.7687063048098555,RandomForest,top_features,"              precision    recall  f1-score   support
+
+           0       0.80      0.72      0.76       284
+           1       0.52      0.43      0.47       151
+           2       0.83      0.93      0.88       450
+
+    accuracy                           0.78       885
+   macro avg       0.72      0.69      0.70       885
+weighted avg       0.77      0.78      0.77       885
+"
+0.776,0.756,0.776,0.76,LogisticRegression,top_features,
+0.792,0.782,0.792,0.783,SVM,top_features,
+0.7898305084745763,0.7280762697635145,0.6939679479871627,0.7027456786057789,Ensemble,top_features,
