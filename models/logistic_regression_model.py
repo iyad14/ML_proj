@@ -21,6 +21,7 @@ class LogisticRegressionModel(BaseModel):
         self.model.fit(self.X_train, self.y_train)
 
     def test_configurations(self) -> None:
+        self.results = []
         # Create a pipeline with scaling and logistic regression
         pipeline = make_pipeline(StandardScaler(), LogisticRegression(max_iter=10000))
 
