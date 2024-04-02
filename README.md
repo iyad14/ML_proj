@@ -2,16 +2,6 @@
 This repository undertakes the challenge of predicting student dropout and academic success through an extensive exploratory data analysis (EDA) of data and supervised machine learning (ML) models.
 Our EDA focuses on understanding the nuances of data through univariate, bivariate, and multivariate analyses, alongside anomaly detection, to identify predictors of student outcomes.
 Moreover, multiple ML models have been used and tuned to get the best performance of each. 
-
-To interact with the model, you can try to input your own data and check the results of our best-performing models. Here is a step-by-step on how to use the UI:
-
-## GraduAIte Mobile App
-To use our mobile app, here are the steps to follow:
-### Step 1: 
-
-### Step 2:
-
-
 The project is structured in a way to easily integrate new models and datasets, through a common `BaseModel` class. The next section provides more detail on how to achieve that.
 ## Extending the Machine Learning Framework
 
@@ -83,6 +73,9 @@ print(best_config)
 Provide documentation for your model class, methods, and any important logic to help others understand and effectively use your model.
 
 # Running the React Native App
+
+![Image](./frontEnds/StudentModelApp/images/ui1.jpeg " UI Image")
+
 
 This section explains how to set up and run the React Native app located in the `frontends/studentmodelapp` directory. The app interfaces with the machine learning model predictions through a FastAPI server.
 
