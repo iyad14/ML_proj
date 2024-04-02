@@ -1,20 +1,35 @@
-# Extending the Machine Learning Framework
+# Predicting Student Dropout and Academic Success
+This repository undertakes the challenge of predicting student dropout and academic success through an extensive exploratory data analysis (EDA) of data and supervised machine learning (ML) models.
+Our EDA focuses on understanding the nuances of data through univariate, bivariate, and multivariate analyses, alongside anomaly detection, to identify predictors of student outcomes.
+Moreover, multiple ML models have been used and tuned to get the best performance of each. 
+
+To interact with the model, you can try to input your own data and check the results of our best-performing models. Here is a step-by-step on how to use the UI:
+
+## GraduAIte Mobile App
+To use our mobile app, here are the steps to follow:
+### Step 1: 
+
+### Step 2:
+
+
+The project is structured in a way to easily integrate new models and datasets, through a common `BaseModel` class. The next section provides more detail on how to achieve that.
+## Extending the Machine Learning Framework
 
 This guide explains how to add a new machine learning model to the existing framework by inheriting from the `BaseModel` class. This ensures that all models maintain a consistent interface and functionality.
 
-## Prerequisites
+### Prerequisites
 
 Before you start, make sure you are familiar with:
 - Python programming
 - Basic machine learning concepts
 - The scikit-learn library
 
-## Step 1: Create Your Model File
+### Step 1: Create Your Model File
 
 1. Create a new Python file in the `models/` directory.
 2. Name the file according to your model, e.g., `your_model.py`.
 
-## Step 2: Import Required Modules
+### Step 2: Import Required Modules
 
 At the top of your file, import the necessary modules. You must import the `BaseModel` class from the base model file:
 
@@ -23,7 +38,7 @@ from .base_model import BaseModel
 from sklearn.something import YourModelClassifier  # Import your specific model class from scikit-learn or another library
 ```
 
-## Step 3: Define Your Model Class
+### Step 3: Define Your Model Class
 
 Create a new class that inherits from `BaseModel`:
 
@@ -33,7 +48,7 @@ class YourModel(BaseModel):
         super().__init__(X_train, X_test, y_train, y_test)
 ```
 
-## Step 4: Implement Required Methods
+### Step 4: Implement Required Methods
 
 Implement the `fit` and `test_configurations` methods. The `fit` method should train the model on the training data, and `test_configurations` should find the best model configuration:
 
@@ -46,11 +61,11 @@ def test_configurations(self):
     # Implement your logic to test different configurations and store the best result in self.results
 ```
 
-## Step 5: (Optional) Override Other Methods
+### Step 5: (Optional) Override Other Methods
 
 If needed, you can override other methods from the `BaseModel` class, such as `evaluate`, `save_model`, or `load_model`.
 
-## Step 6: Testing Your Model
+### Step 6: Testing Your Model
 
 To test your new model, import and use it in the `main.py` script, similar to how other models are used:
 
@@ -63,7 +78,7 @@ best_config = model.run()
 print(best_config)
 ```
 
-## Step 7: Document Your Model
+### Step 7: Document Your Model
 
 Provide documentation for your model class, methods, and any important logic to help others understand and effectively use your model.
 
