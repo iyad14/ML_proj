@@ -1,6 +1,8 @@
-from .base_model import BaseModel  # Adjust the import path based on your project structure
 from sklearn.svm import SVC
 from sklearn.model_selection import GridSearchCV
+from sklearn.calibration import CalibratedClassifierCV  # Import if you decide to use calibration
+from .base_model import BaseModel  # Adjust import path based on your project structure
+
 
 class SVMModel(BaseModel):
     def __init__(self, X_train, X_test, y_train, y_test):
@@ -10,7 +12,8 @@ class SVMModel(BaseModel):
         """
         Fit the SVM model using specified hyperparameters.
         """
-        self.model = SVC(C=C, kernel=kernel)
+        # Enable probability estimation
+        self.model = SVC(C=C, kernel=kernel, probability=True)
         self.model.fit(self.X_train, self.y_train)
 
     def test_configurations(self):
@@ -20,8 +23,9 @@ class SVMModel(BaseModel):
         param_grid = {
             'C': [0.1, 1, 10],
             'kernel': ['linear', 'rbf', 'poly'],
+            # Ensure probability is True for all configurations
         }
-        grid_search = GridSearchCV(SVC(), param_grid, refit=True, cv=5, scoring='accuracy')
+        grid_search = GridSearchCV(SVC(probability=True), param_grid, refit=True, cv=5, scoring='accuracy')
         grid_search.fit(self.X_train, self.y_train)
 
         # Update the model with the best parameters found

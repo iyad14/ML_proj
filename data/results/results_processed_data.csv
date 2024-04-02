@@ -10,6 +10,6 @@ Accuracy,Precision,Recall,F1 Score,Model,Dataset,Classification Report
    macro avg       0.76      0.72      0.73       885
 weighted avg       0.79      0.80      0.79       885
 "
-0.781,0.767,0.781,0.77,LogisticRegression,processed_data,
+0.782,0.768,0.782,0.771,LogisticRegression,processed_data,
 0.776,0.765,0.776,0.766,SVM,processed_data,
-0.7966101694915254,0.7451263331571457,0.7067800129202984,0.7182134323263355,Ensemble,processed_data,
+0.7977401129943503,0.747219087615048,0.7075207536610391,0.7192345966655594,Ensemble,processed_data,

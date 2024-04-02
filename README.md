@@ -67,4 +67,70 @@ print(best_config)
 
 Provide documentation for your model class, methods, and any important logic to help others understand and effectively use your model.
 
----
+# Running the React Native App
+
+This section explains how to set up and run the React Native app located in the `frontends/studentmodelapp` directory. The app interfaces with the machine learning model predictions through a FastAPI server.
+
+## Prerequisites for React Native
+
+Before running the app, ensure you have the following installed:
+- Node.js and npm (Node Package Manager)
+- React Native CLI (Command Line Interface)
+- Android Studio or Xcode (for Android or iOS emulation, respectively)
+
+## Installation Steps
+
+1. **Install Expo CLI:** Expo is an open-source platform for making universal native apps for Android, iOS, and the web with JavaScript and React.
+
+    ```bash
+    npm install -g expo-cli
+    ```
+
+2. **Navigate to the App Directory:**
+
+    ```bash
+    cd frontends/studentmodelapp
+    ```
+
+3. **Install Dependencies:**
+
+    ```bash
+    npm install
+    ```
+
+## Modify the API Server Address
+
+To ensure the app communicates with your FastAPI server, modify the server's address in the `AppScreen.js` file. This should match the IP address of the Wi-Fi connection your server machine is connected to.
+
+- Locate the `axios.post` line in `AppScreen.js`.
+- Replace `'http://172.20.10.12:8000/predict/'` with your server's IP address and port, e.g., `'http://<Your-Server-IP>:8000/predict/'`.
+
+## Running the App
+
+1. **Start the React Native App:**
+
+    ```bash
+    npm start
+    ```
+
+    or, if you prefer using Expo:
+
+    ```bash
+    expo start
+    ```
+
+2. **Launch the App in an Emulator or on a Physical Device:**
+
+    - For iOS, run `npm run ios` or `expo start --ios`.
+    - For Android, run `npm run android` or `expo start --android`.
+
+    Ensure the emulator is running, or the physical device is connected and detected by your system.
+
+3. **Interact with the App:** Input student data and submit it to receive predictions from your machine learning model.
+
+## Troubleshooting
+
+- If the app cannot connect to the FastAPI server, ensure the server is running and accessible from your device.
+- For issues related to npm or Expo, verify their installation or refer to their respective documentation for troubleshooting steps.
+
+By following these steps, you should be able to run and interact with the React Native app, seamlessly integrating with the machine learning predictions from the FastAPI server.

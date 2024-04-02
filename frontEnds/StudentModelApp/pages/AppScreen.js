@@ -1,5 +1,3 @@
-
-// AppScreen.js
 import React, { useState } from 'react';
 import {
     ScrollView,
@@ -83,24 +81,17 @@ const AppScreen = () => {
 
         try {
             const response = await axios.post('http://172.20.10.12:8000/predict/', payload);
-            const processedResults = [];
-            let knnCount = 0;
-            let rfCount = 0;
-
-            Object.entries(response.data).forEach(([key, value]) => {
+            const processedResults = response.data ? Object.entries(response.data).reduce((acc, [key, value]) => {
                 if (key.includes('Prediction')) {
-                    const isKNN = key.includes('KNN');
-                    const model = isKNN ? (++knnCount > 1 ? 'KNN 2nd Prediction' : 'KNN') : (++rfCount > 1 ? 'RF 2nd Prediction' : 'RF');
+                    const modelName = key.split(' ')[0];
                     const confidenceKey = key.replace('Prediction', 'Confidence');
                     const confidenceValue = response.data[confidenceKey] * 100;
-
-                    processedResults.push({
-                        model,
-                        prediction: translatePrediction(value),
-                        confidence: `${confidenceValue.toFixed(2)}%`,
-                    });
+                    const modelPrediction = translatePrediction(value);
+                    acc.push({ model: modelName, prediction: modelPrediction, confidence: `${confidenceValue.toFixed(2)}%` });
                 }
-            });
+                return acc;
+            }, []) : [];
+
             setResults(processedResults);
         } catch (error) {
             console.error(error);
