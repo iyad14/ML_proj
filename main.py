@@ -18,8 +18,6 @@ from sklearn.model_selection import train_test_split
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
-all_results= []
-
 # Paths for different types of files
 datasets_path = 'datasets/'
 saved_models_path = os.path.join('models')
@@ -60,7 +58,7 @@ def main():
 
 def run_models(models_info, dataset_name, saved_models_path, results_path, X_train, X_test, y_train, y_test):
     models = []
-    all_results = []  # This should be a local variable, not global
+    all_results = []
 
     for model_name, model_class, model_params in models_info:
         logging.info(f"Running {model_name} Model...")
@@ -104,7 +102,6 @@ def run_models(models_info, dataset_name, saved_models_path, results_path, X_tra
         joblib.dump(ensemble_model, ensemble_model_filename)
         logging.info(f"Saved ensemble model for {dataset_name} in {ensemble_model_filename}")
 
-    # Save all results to a CSV file
     # Save all results to a CSV file in the results subfolder
     results_filename = os.path.join(results_path, f"results_{dataset_name}.csv")
     pd.DataFrame(all_results).to_csv(results_filename, index=False)
@@ -118,17 +115,23 @@ def visualize_performance(results_path, figures_path):
 
     # Load and concatenate all results
     all_results = pd.concat([pd.read_csv(os.path.join(results_path, f)) for f in results_files])
+    color_palette = ['red', 'blue', 'green']
 
     # Visualization of metrics for each model across all datasets
     metrics = ['Accuracy', 'Precision', 'Recall', 'F1 Score']
     for metric in metrics:
         plt.figure(figsize=(12, 6))
-        sns.barplot(data=all_results, x='Model', y=metric, hue='Dataset')
         plt.title(f'{metric} of Models (Including Ensemble) Across Datasets')
         plt.ylabel(metric)
         plt.xlabel('Model')
         plt.xticks(rotation=45)
         plt.legend(title='Dataset')
+        barplot = sns.barplot(data=all_results, x='Model', y=metric, hue='Dataset', palette=color_palette)
+        # Add the text labels on top of each bar
+        for p in barplot.patches:
+            height = p.get_height()
+            plt.text(p.get_x() + p.get_width() / 2., height + 0.01, f'{height:.2f}', ha='center', va='bottom')
+
         plt.tight_layout()
         plt.savefig(os.path.join(figures_path, f"{metric.lower()}_comparison.png"))
         plt.show()
